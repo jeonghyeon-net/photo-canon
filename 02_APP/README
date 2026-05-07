@@ -1,20 +1,50 @@
 사용자 앱
 
 ROLE
-  제품의 핵심 사용자 인터페이스와 클라이언트 상태를 담당한다.
+  TypeScript 앱 뼈대다.
   Android, iOS, Browser 출시를 모두 지원한다.
+  Browser 빌드는 Cloudflare Pages에 배포한다.
 
 STACK
-  App: Capacitor
+  App: Vite + Capacitor
+  Hosting: Cloudflare Pages
   Runtime: Node
   Language: TypeScript
-  Targets: Android, iOS, Browser
-  API: 01_SERVER의 Cloudflare Worker와 통신한다.
+  API: Hono RPC client로 01_SERVER 계약을 사용한다.
+
+STRUCTURE
+  src/modules/session
+    Firebase 로그인, /me smoke flow, 닉네임 변경 smoke flow
+  src/shared/api
+    서버 RPC client 경계
+  src/shared/firebase
+    Firebase web client 초기화와 Auth wrapper
+  src/main.ts
+    Browser entrypoint skeleton
+  src/styles.css
+    최소 전역 스타일 skeleton
+  capacitor.config.ts
+    Native shell 설정과 webDir
+  .env
+    브라우저에 노출 가능한 VITE_ Firebase web config만 둔다.
+  wrangler.jsonc
+    Cloudflare Pages 배포 설정
+
+COMMANDS
+  npm install
+  npm run dev
+  npm run build
+  npm run pages:deploy
+  npm run cap:add:android
+  npm run cap:add:ios
+  npm run cap:sync
 
 RULES
-  앱 코드는 이 디렉터리 안에 둔다.
-  android/와 ios/ 네이티브 프로젝트는 소스이므로 커밋한다.
+  파일명은 kebab-case를 쓴다.
+  API 통신은 shared/api 경계에서만 생성하고 항상 운영 API를 호출한다.
+  Firebase SDK 직접 접근은 shared/firebase 경계에 둔다.
+  02_APP/.env는 public VITE_ 값만 허용하고 secret은 넣지 않는다.
+  Hono RPC 계약은 01_SERVER의 AppType을 사용한다.
+  기능 구현 전에는 feature/module 구조를 먼저 정한다.
+  android/와 ios/ 네이티브 프로젝트는 소스이므로 생성 후 커밋한다.
   빌드 산출물, Gradle/Xcode 캐시, Pods, 서명 키는 커밋하지 않는다.
-  서버 API 계약은 99_DOCS에 기록한 뒤 구현한다.
-  사용자 입력, 로딩, 빈 상태, 네트워크 실패 상태를 명확히 처리한다.
-  기능 변경은 테스트 또는 실행 검증과 함께 추가한다.

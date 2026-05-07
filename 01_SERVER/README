@@ -1,19 +1,72 @@
 서버
 
 ROLE
-  Cloudflare Workers 기반 API 서버를 둔다.
+  Cloudflare Workers 기반 API 서버 뼈대다.
   데이터베이스는 Cloudflare D1을 사용한다.
+  02_APP은 Hono RPC 타입 계약으로 이 서버와 통신한다.
 
 STACK
   Runtime: Cloudflare Workers
+  Framework: Hono
+  Validation: Zod
+  API contract: Hono RPC
   Database: Cloudflare D1
   Language: TypeScript
-  Local tooling: Node
+  Local tooling: Node, Wrangler
+
+STRUCTURE
+  src/app
+    Hono app 조립과 middleware 연결
+  src/modules/auth
+    Firebase ID token 검증과 Authorization header 처리
+  src/modules/member
+    D1 member, identity 연결, /me endpoint
+  src/modules/system
+    health, db health, ping 같은 시스템 slice
+  src/shared/http
+    공용 HTTP middleware와 response helper
+  src/types
+    Worker binding 타입 경계
+  src/rpc.ts
+    02_APP에 공유하는 AppType export
+  src/index.ts
+    Worker entrypoint
+  wrangler.jsonc
+    Worker, D1 binding, deploy 설정
+
+COMMANDS
+  npm install
+  npm run dev
+  npm run check
+  npm run build:types
+  npm run deploy
+
+ROUTES
+  GET /health
+    Worker 상태 확인
+  GET /api/v1/db/health
+    D1 binding 상태 확인
+  GET /api/v1/me
+    Firebase ID token 검증 후 member 조회 또는 첫 로그인 생성
+  PATCH /api/v1/me
+    닉네임 변경. 고유 숫자 tag는 변경하지 않는다.
+  POST /api/v1/ping
+    Zod 검증과 RPC 타입 공유 확인용 skeleton endpoint
 
 RULES
-  Worker 코드와 Wrangler 설정은 이 디렉터리 안에 둔다.
-  D1 접근은 명시적인 binding을 통해 처리한다.
-  스키마 변경은 migration으로 남긴다.
-  비밀은 .env 파일이나 Cloudflare secrets에만 두고 커밋하지 않는다.
-  외부 입력은 Worker 경계에서 검증한다.
-  API 계약은 99_DOCS에 기록하고 02_APP과 맞춘다.
+  Worker 프로젝트 루트는 01_SERVER다.
+  Worker 소스 코드는 src/에 둔다.
+  파일명은 kebab-case를 쓴다.
+  새 기능은 src/modules/<feature>/ 안에 contract, service, routes로 묶는다.
+  shared/는 여러 module에서 쓰는 HTTP 유틸만 둔다.
+  Firebase는 인증 사용자 저장소로만 사용한다.
+  D1 members와 member_identities는 서비스 멤버 상태와 권한을 저장한다.
+  auth/member 불변식은 policy module과 D1 trigger 양쪽에서 강제한다.
+  닉네임은 중복 가능하며 member_tag_numbers의 8자리 랜덤 고유 숫자로 식별한다.
+  닉네임은 Instagram username처럼 1-30자, 영문 소문자/숫자/._만 허용한다.
+  닉네임의 .은 시작/끝/연속 사용이 불가하고 입력값은 소문자로 정규화한다.
+  D1 접근은 DB binding을 통해 처리한다.
+  스키마 변경은 migrations/에 남긴다.
+  비밀은 .env, .dev.vars, Cloudflare secrets에만 두고 커밋하지 않는다.
+  외부 입력은 Worker 경계에서 Zod로 검증한다.
+  API 계약은 Hono RPC AppType으로 공유한다.

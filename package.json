@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "workspaces": [
+    "01_SERVER",
+    "02_APP"
+  ],
+  "scripts": {
+    "check:rules": "go test ./00_RULE/tests",
+    "check:server": "npm --workspace photo-canon-server run check",
+    "check:app": "npm --workspace photo-canon-app run check",
+    "check": "npm run check:server && npm run check:app && npm run check:rules"
+  }
+}

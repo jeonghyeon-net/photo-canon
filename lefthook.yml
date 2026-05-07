@@ -1,9 +1,9 @@
 pre-commit:
   commands:
-    rules:
-      run: node --test 00_RULE/tests/*.test.js
+    check:
+      run: mise exec -- npm run check
 
 pre-push:
   commands:
-    rules:
-      run: node --test 00_RULE/tests/*.test.js
+    check:
+      run: mise exec -- npm run check

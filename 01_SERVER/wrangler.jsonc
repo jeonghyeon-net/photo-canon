@@ -1,0 +1,29 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "photo-canon-server",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-05-07",
+  "account_id": "3b4be5b6010a1641533727c7682c0a82",
+  "workers_dev": true,
+  "routes": [
+    {
+      "pattern": "api-photo.jeonghyeon.net",
+      "custom_domain": true
+    }
+  ],
+  "observability": {
+    "enabled": true
+  },
+  "vars": {
+    "CORS_ORIGIN": "http://localhost:5173,http://localhost,capacitor://localhost,https://photo.jeonghyeon.net",
+    "FIREBASE_PROJECT_ID": "photo-canon"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "photo-canon",
+      "database_id": "d882fa0a-c5e0-4774-bc0d-002a9109c0e9",
+      "migrations_dir": "migrations"
+    }
+  ]
+}

@@ -6,24 +6,32 @@
 
   STACK
     Runtime           Node 24.15.0
+    Rule harness      Go 1.26.0
     Hooks             Lefthook 2.1.6
     Server            Cloudflare Workers
     Database          Cloudflare D1
-    App               Capacitor
+    App               Vite + Capacitor
+    App hosting       Cloudflare Pages
+    API contract      Hono RPC
     Targets           Android, iOS, Browser
     Language          TypeScript
 
   STRUCTURE
-    00_RULE           저장소 구조와 품질 규칙을 Node 테스트로 강제
-    01_SERVER         Cloudflare Workers 기반 API 서버
+    00_RULE           저장소 구조와 품질 규칙을 Go 테스트로 강제
+    01_SERVER         Cloudflare Workers 기반 API 서버 루트
     02_APP            Capacitor 앱 (Android, iOS, Browser)
     99_DOCS           명세, ADR, API 계약, 운영 문서
 
   COMMANDS
     mise install
     lefthook install
-    node --test 00_RULE/tests/*.test.js
+    go test ./00_RULE/tests
     mise exec -- lefthook run pre-commit --force
+    npm install
+    npm run check
+    npm --workspace photo-canon-server run dev
+    npm --workspace photo-canon-app run dev
+    npm --workspace photo-canon-app run pages:deploy
 
   RULES
     루트에는 허용된 항목만 둔다.
@@ -32,4 +40,5 @@
     빈 디렉터리 추적용 .gitkeep은 README나 실제 파일이 생기면 제거한다.
     로컬 상태, 비밀, 빌드 산출물은 .gitignore에 둔다.
     파일은 최대 200줄까지 허용한다.
+    파일명은 kebab-case를 기본으로 쓰고 Go 테스트의 _test.go suffix는 허용한다.
     TypeScript에서 as any, as unknown, as never를 쓰지 않는다.

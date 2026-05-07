@@ -1,0 +1,35 @@
+{
+  "name": "photo-canon-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "contracts": "npm --prefix ../01_SERVER run build:types",
+    "dev": "npm run contracts && vite --host 0.0.0.0",
+    "build": "npm run contracts && tsc --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "typecheck": "npm run contracts && tsc --noEmit",
+    "test": "npm run typecheck",
+    "check": "npm test",
+    "pages:deploy": "npm run build && wrangler pages deploy dist --project-name photo-canon-app",
+    "pages:preview": "npm run build && wrangler pages deploy dist --project-name photo-canon-app --branch preview",
+    "cap:sync": "npm run build && cap sync",
+    "cap:add:android": "cap add android",
+    "cap:add:ios": "cap add ios",
+    "cap:open:android": "cap open android",
+    "cap:open:ios": "cap open ios"
+  },
+  "dependencies": {
+    "@capacitor/core": "8.3.1",
+    "firebase": "12.13.0",
+    "hono": "4.12.18",
+    "photo-canon-server": "file:../01_SERVER"
+  },
+  "devDependencies": {
+    "@capacitor/android": "8.3.1",
+    "@capacitor/cli": "8.3.1",
+    "@capacitor/ios": "8.3.1",
+    "typescript": "6.0.3",
+    "vite": "8.0.11",
+    "wrangler": "4.89.0"
+  }
+}

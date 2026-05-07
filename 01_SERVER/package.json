@@ -1,0 +1,35 @@
+{
+  "name": "photo-canon-server",
+  "private": true,
+  "type": "module",
+  "types": "./dist-types/rpc.d.ts",
+  "exports": {
+    "./rpc": {
+      "types": "./dist-types/rpc.d.ts",
+      "default": "./dist-types/rpc.d.ts"
+    }
+  },
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "types:worker": "wrangler types worker-configuration.d.ts",
+    "build:types": "npm run types:worker && tsc -p tsconfig.types.json",
+    "typecheck": "npm run types:worker && tsc --noEmit",
+    "unit": "tsx --test src/**/*.test.ts",
+    "test": "npm run typecheck && npm run unit",
+    "check": "npm test",
+    "db:migrate:local": "wrangler d1 migrations apply DB --local",
+    "db:migrate:remote": "wrangler d1 migrations apply DB --remote"
+  },
+  "dependencies": {
+    "@hono/zod-validator": "0.7.6",
+    "hono": "4.12.18",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.2",
+    "tsx": "4.21.0",
+    "typescript": "6.0.3",
+    "wrangler": "4.89.0"
+  }
+}
