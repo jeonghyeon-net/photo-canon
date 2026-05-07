@@ -1,2 +1,115 @@
+# Local agent state
 .pi/
+
+# OS/editor
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.swp
+*.swo
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.keystore
+*.jks
+
+# Local tool config
+mise.local.toml
+.mise.local.toml
+.lefthook-local.yml
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+capacitor-build.log
+
+# Node
+node_modules/
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+*.tsbuildinfo
+.eslintcache
+
+# Browser/web build output
+dist/
+build/
+out/
+coverage/
+www/
+.next/
+.nuxt/
+.svelte-kit/
+.turbo/
+.vite/
+.cache/
+.parcel-cache/
+.netlify/
+.vercel/
+
+# Capacitor generated web assets
+02_APP/android/app/src/main/assets/public/
+02_APP/android/app/src/main/assets/capacitor.config.json
+02_APP/android/app/src/main/assets/capacitor.plugins.json
+02_APP/ios/App/App/public/
+02_APP/ios/App/App/capacitor.config.json
+02_APP/ios/App/App/capacitor.plugins.json
+
+# Android / Gradle
+.gradle/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.iml
+02_APP/android/.gradle/
+02_APP/android/local.properties
+02_APP/android/captures/
+02_APP/android/.externalNativeBuild/
+02_APP/android/.cxx/
+02_APP/android/build/
+02_APP/android/app/build/
+02_APP/android/app/release/
+02_APP/android/app/debug/
+
+# iOS / Xcode
+DerivedData/
+Pods/
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+02_APP/ios/App/Pods/
+02_APP/ios/App/build/
+02_APP/ios/App/DerivedData/
+02_APP/ios/App/xcuserdata/
+
+# Runtime/test artifacts
+bin/
+tmp/
+*.test
+*.out
+coverage.out
+
+# Local data and uploads
+*.db
+*.sqlite
+*.sqlite3
+uploads/

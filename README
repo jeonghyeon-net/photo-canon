@@ -1,0 +1,35 @@
+
+         ╔════════════════════════════════════════╗
+         ║              photo-canon               ║
+         ║  Cloudflare Workers + D1 + Capacitor   ║
+         ╚════════════════════════════════════════╝
+
+  STACK
+    Runtime           Node 24.15.0
+    Hooks             Lefthook 2.1.6
+    Server            Cloudflare Workers
+    Database          Cloudflare D1
+    App               Capacitor
+    Targets           Android, iOS, Browser
+    Language          TypeScript
+
+  STRUCTURE
+    00_RULE           저장소 구조와 품질 규칙을 Node 테스트로 강제
+    01_SERVER         Cloudflare Workers 기반 API 서버
+    02_APP            Capacitor 앱 (Android, iOS, Browser)
+    99_DOCS           명세, ADR, API 계약, 운영 문서
+
+  COMMANDS
+    mise install
+    lefthook install
+    node --test 00_RULE/tests/*.test.js
+    mise exec -- lefthook run pre-commit --force
+
+  RULES
+    루트에는 허용된 항목만 둔다.
+    각 최상위 작업 디렉터리는 README를 가진다.
+    Markdown 확장자 .md 파일은 만들지 않는다.
+    빈 디렉터리 추적용 .gitkeep은 README나 실제 파일이 생기면 제거한다.
+    로컬 상태, 비밀, 빌드 산출물은 .gitignore에 둔다.
+    파일은 최대 200줄까지 허용한다.
+    TypeScript에서 as any, as unknown, as never를 쓰지 않는다.

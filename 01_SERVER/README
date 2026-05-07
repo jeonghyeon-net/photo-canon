@@ -1,0 +1,19 @@
+서버
+
+ROLE
+  Cloudflare Workers 기반 API 서버를 둔다.
+  데이터베이스는 Cloudflare D1을 사용한다.
+
+STACK
+  Runtime: Cloudflare Workers
+  Database: Cloudflare D1
+  Language: TypeScript
+  Local tooling: Node
+
+RULES
+  Worker 코드와 Wrangler 설정은 이 디렉터리 안에 둔다.
+  D1 접근은 명시적인 binding을 통해 처리한다.
+  스키마 변경은 migration으로 남긴다.
+  비밀은 .env 파일이나 Cloudflare secrets에만 두고 커밋하지 않는다.
+  외부 입력은 Worker 경계에서 검증한다.
+  API 계약은 99_DOCS에 기록하고 02_APP과 맞춘다.

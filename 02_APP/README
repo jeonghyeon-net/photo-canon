@@ -1,0 +1,20 @@
+사용자 앱
+
+ROLE
+  제품의 핵심 사용자 인터페이스와 클라이언트 상태를 담당한다.
+  Android, iOS, Browser 출시를 모두 지원한다.
+
+STACK
+  App: Capacitor
+  Runtime: Node
+  Language: TypeScript
+  Targets: Android, iOS, Browser
+  API: 01_SERVER의 Cloudflare Worker와 통신한다.
+
+RULES
+  앱 코드는 이 디렉터리 안에 둔다.
+  android/와 ios/ 네이티브 프로젝트는 소스이므로 커밋한다.
+  빌드 산출물, Gradle/Xcode 캐시, Pods, 서명 키는 커밋하지 않는다.
+  서버 API 계약은 99_DOCS에 기록한 뒤 구현한다.
+  사용자 입력, 로딩, 빈 상태, 네트워크 실패 상태를 명확히 처리한다.
+  기능 변경은 테스트 또는 실행 검증과 함께 추가한다.

@@ -1,0 +1,9 @@
+pre-commit:
+  commands:
+    rules:
+      run: node --test 00_RULE/tests/*.test.js
+
+pre-push:
+  commands:
+    rules:
+      run: node --test 00_RULE/tests/*.test.js

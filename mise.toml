@@ -1,0 +1,6 @@
+[settings]
+disable_tools = ["go"]
+
+[tools]
+node = "24.15.0"
+lefthook = "2.1.6"
